@@ -14,7 +14,7 @@ function AppRoutes() {
     { path: "/admin", element: <Admin /> },
     { path: "/setting", element: <Setting /> },
     { path: "/article/:id", element: <ArticleById /> },
-    { path: "/categories/:id/article", element: <ArticleByCategory /> },
+    { path: "/categories/:id/articles", element: <ArticleByCategory /> },
   ]);
 }
 

@@ -30,7 +30,7 @@ const Sidebar: React.FC<SideProps> = (props) => {
 
   return (
     <aside className={`${isOpen ? 'w-40' : ""}`}>
-      <div className={`mt-2 ${isOpen ? "w-52" : "side"} shadow-lg h-screen  px-5`}>
+      <div className={`mt-2 ${isOpen ? "w-52" : "side"} shadow-lg h-full  px-5`}>
         {isOpen && <TreeView categories={categories} />}
       </div>
     </aside>
