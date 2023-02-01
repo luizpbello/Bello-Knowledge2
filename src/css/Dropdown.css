@@ -1,0 +1,8 @@
+.one {
+    transform: rotateY(180deg)
+    
+}
+
+.two {
+    transform: rotateX('angle')
+}
