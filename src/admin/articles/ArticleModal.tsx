@@ -10,7 +10,7 @@ import { ToastContainer } from "react-toastify";
 
 interface Article { 
   loadArticles: () => void;
-  isEdit: boolean;
+  isEdit: { [key: number]: boolean };
 
 }
 
@@ -84,7 +84,7 @@ export const ArticleModal: React.FC<Article> = ({ loadArticles, isEdit }) => {
 
   const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('ok')
+ console.log('ok')
   };
 
   return (

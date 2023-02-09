@@ -5,7 +5,7 @@ import api from "../../config/axios";
 import Pagination from "react-paginate";
 
 interface ArticleAdmin {
-  loadArticles: () => void;
+  loadArticles?: () => void;
 }
 
 type Articles = {
@@ -27,12 +27,15 @@ export const ArticleAdmin: React.FC<ArticleAdmin> = () => {
   const [articles, setArticles] = useState<ArticleTableProps[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1)
-  const [isEdit, setIsEdit] = useState(false)
+  const [isEdit, setIsEdit] = useState<{ [key: string]: boolean }>({});
 
 
-  const handleEdit = () => {
-    setIsEdit(true)
-  }
+  const handleEdit = (id: number) => {
+    setIsEdit(prevState => ({
+      ...prevState,
+      [id]: !prevState[id]
+    }));
+  };
 
   const loadArticles = async () => {
     api

@@ -14,7 +14,7 @@ type Article = {
 interface ArticleTableProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleEdit: () => void;
+  handleEdit: (id: number) => void;
   loadArticles: () => void;
   articles: Article[];
 }
@@ -31,7 +31,7 @@ export const ArticleTable: React.FC<ArticleTableProps> = ({
 
   const editArticle = async (id: number) => {
     const response = await api.get(`/articles/${id}`);
-    handleEdit()
+    handleEdit(id)
     setShowModal(true)
 
     console.log(response.data);

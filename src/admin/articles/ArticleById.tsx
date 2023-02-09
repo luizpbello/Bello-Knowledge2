@@ -5,6 +5,7 @@ interface ArticleById {
   name: string;
   description: string;
   imageUrl: string;
+  
 }
 
 export const ArticleById: React.FC<ArticleById> = (article) => {
