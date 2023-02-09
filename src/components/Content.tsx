@@ -7,9 +7,6 @@ import Sidebar from "../Layout/Sidebar";
 import { useUser } from "../redux/sliceUser";
 
 
-interface ContentProps {
-  isOpen: boolean;
-}
 
 const Content: React.FC<ContentProps> = () => {
   const user = useSelector(useUser);
@@ -28,7 +25,7 @@ const Content: React.FC<ContentProps> = () => {
       {isAuth && <Header toggleOpen={toggleOpen} isOpen={isOpen} />}
       <div className={`${isAuth ? "flex" : ""} `}>
         {isAuth && <Sidebar isOpen={isOpen} />}
-        <div className={`bg-stone-100 ${isAuth ? "flex justify-center w-full" : ""}`}>
+        <div className={`bg-stone-100 h-screen ${isAuth ? "flex justify-center w-full h-full" : ""}`}>
           <AppRoutes />
         </div>
       </div>

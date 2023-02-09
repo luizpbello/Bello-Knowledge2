@@ -8,15 +8,10 @@ ReactQuill.Quill.register("modules/imageResize", ImageResize);
 import { myToast } from "../../components/Toast";
 import { ToastContainer } from "react-toastify";
 
-interface Article {
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  categoryId: number;
-  userId: number;
-  content: string;
+interface Article { 
   loadArticles: () => void;
+  isEdit: boolean;
+
 }
 
 interface User {
@@ -31,7 +26,7 @@ interface Category {
   path: string;
 }
 
-export const ArticleModal: React.FC<Article> = ({ loadArticles }) => {
+export const ArticleModal: React.FC<Article> = ({ loadArticles, isEdit }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [category, setCategory] = useState<Category[]>([]);
 
@@ -79,16 +74,21 @@ export const ArticleModal: React.FC<Article> = ({ loadArticles }) => {
     e.preventDefault();
     try {
       await api.post("/articles", article);
-      myToast("success", "Artigo registrado com sucesso!");
+      myToast("success");
     } catch (error: any) {
-      myToast("error", "");
+      myToast("error");
     }
     loadArticles();
     clearForm()
   };
 
+  const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('ok')
+  };
+
   return (
-    <form className="mt-5  rounded-lg" onSubmit={handleSubmit}>
+    <form className="mt-5  rounded-lg" onSubmit={!isEdit ? handleSubmit : handleEdit}>
       <ToastContainer />
       <div className="relative z-0 w-full mb-6 group">
         <input

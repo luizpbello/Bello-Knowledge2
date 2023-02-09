@@ -1,48 +1,80 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import ArticleModal from "./ArticleModal";
 import ArticleTable from "./ArticleTable";
 import api from "../../config/axios";
+import Pagination from "react-paginate";
 
-interface ArticleAdmin{
+interface ArticleAdmin {
   loadArticles: () => void;
 }
+
+type Articles = {
+  id: number;
+  name: string;
+  description: string;
+};
 
 interface ArticleTableProps {
   id: number;
   name: string;
   description: string;
-  loadArticles:() =>void;
+  articles: Articles[];
+  loadArticles: () => void;
 }
 
-export const ArticleAdmin: React.FC<ArticleAdmin> = (props) => {
+export const ArticleAdmin: React.FC<ArticleAdmin> = () => {
   const [showModal, setShowModal] = useState(false);
   const [articles, setArticles] = useState<ArticleTableProps[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1)
+  const [isEdit, setIsEdit] = useState(false)
 
+
+  const handleEdit = () => {
+    setIsEdit(true)
+  }
 
   const loadArticles = async () => {
     api
-      .get("/articles")
-      .then((res) => setArticles(res.data.data))
+      .get(`/articles?page=${page}`)
+      .then((res) => {
+        setArticles(res.data.data);
+        setTotalPages(Math.ceil(res.data.count / res.data.limit))
+      })
       .catch((err) => console.log(err));
   };
 
+
   useEffect(() => {
     loadArticles();
-  }, []);
-
+  }, [page]);
 
   return (
     <div className="">
-
       <div className="py-2.5 bg-white mt-5 flex flex-col items-center rounded-lg shadow-lg gap-4 ">
-        <ArticleTable articles={articles} loadArticles={loadArticles}/>
-      <button
-        className="bg-green-700 text-white active:bg-green-800 w-38 text-sm px-6 py-3 rounded shadow hover:bg-green-800 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        onClick={() => setShowModal(true)}
-      >
-        Adicionar Artigo
-      </button>
+        <ArticleTable handleEdit={handleEdit} setShowModal={setShowModal} showModal={showModal} articles={articles} loadArticles={loadArticles} />
+
+        <Pagination
+          className="flex gap-2 mt-3 justify-center"
+          pageCount={totalPages}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={2}
+          onPageChange={(page) => setPage(page.selected + 1)}
+          previousLabel={"<"}
+          nextLabel={">"}
+          containerClassName={"pagination"}
+          activeLinkClassName={"active"}
+          breakClassName={"break"}
+          nextLinkClassName={"next"}
+          previousLinkClassName={"prev"}
+        />
+        <button
+          className=" text-white bg-indigo-700 w-38 text-sm px-6 py-3 rounded-lg shadow-lg outline-none hover:bg-indigo-600  focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          onClick={() => setShowModal(true)}
+        >
+          Adicionar Artigo
+        </button>
       </div>
 
       {showModal ? (
@@ -62,7 +94,7 @@ export const ArticleAdmin: React.FC<ArticleAdmin> = (props) => {
                   </div>
                 </div>
                 <div className="relative p-6 flex-auto">
-                  <ArticleModal loadArticles={loadArticles} />
+                  <ArticleModal isEdit={isEdit} loadArticles={loadArticles} />
                 </div>
               </div>
             </div>

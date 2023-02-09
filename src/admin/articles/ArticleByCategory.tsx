@@ -2,6 +2,8 @@ import api from "../../config/axios";
 import { useState, useEffect } from "react";
 import ArticleById from "./ArticleById";
 import SectionTitle from "../../components/SectionTitle";
+import { useSelector } from "react-redux";
+import { useSetCategoryId } from "../../redux/sliceCategoryId";
 
 interface ArticleProps {
   id: number;
@@ -11,16 +13,19 @@ interface ArticleProps {
 
 export const ArticleByCategory: React.FC = () => {
   const [articles, setArticles] = useState<ArticleProps[]>([]);
-  const [category, setCategory] = useState();
+  const [categoryID, setCategoryID] = useState();
   const [loadMore, setLoadMore] = useState(true);
   const [page, setPage] = useState(1);
+  const categoryId = useSelector(useSetCategoryId)
+
+  console.log(categoryId)
 
   const getCategory = async () => {
-    await api.get(`categories/1`).then((res) => console.log("ok"));
+    await api.get(`categories/2`).then((res) => console.log(res.data));
   };
 
   const getArticles = async () => {
-    await api.get(`/categories/1/articles?page=${page}`).then((res) => {
+    await api.get(`/categories/2/articles?page=${page}`).then((res) => {
       setArticles(articles.concat(res.data));
       res.data.length == 0 ? setLoadMore(false) : setLoadMore(true);
     });

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { UserAdmin } from "../admin/UserAdmin";
-import { CategoryAdmin } from "../admin/CategoryAdmin";
+import { UserAdmin } from "../admin/users/UserAdmin";
+import { CategoryAdmin } from "../admin/categories/CategoryAdmin";
 import { ArticleAdmin } from "../admin/articles/ArticleAdmin";
 import SectionTitle from "../components/SectionTitle";
 
