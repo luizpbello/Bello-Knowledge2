@@ -25,7 +25,7 @@ const Content: React.FC<ContentProps> = () => {
       {isAuth && <Header toggleOpen={toggleOpen} isOpen={isOpen} />}
       <div className={`${isAuth ? "flex" : ""} `}>
         {isAuth && <Sidebar isOpen={isOpen} />}
-        <div className={`bg-stone-100 h-full ${isAuth ? "flex justify-center w-full h-full" : ""}`}>
+        <div className={`bg-stone-100 h-screen ${isAuth ? "flex justify-center w-full h-full" : ""}`}>
           <AppRoutes />
         </div>
       </div>
