@@ -61,7 +61,7 @@ export function Login() {
 
   return (
     <div
-      className={`bg flex flex-col items-center justify-center px-20 md:h-screen  `}
+      className={`bg flex flex-col items-center justify-center px-20 md:h-full  `}
     >
       <ToastContainer />
       <div className="w-1/4  bg-white rounded-lg shadow-lg flex flex-col items-center  mt-2 ">
